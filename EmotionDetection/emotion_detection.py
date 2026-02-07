@@ -10,8 +10,17 @@ def emotion_detector(text_to_analyse):
     
     reply_text = response.text
     reply_json = json.loads(reply_text)
+    emotions = reply_json['emotionPredictions'][0]['emotion']
 
-    max_emotion = 1000
-    for emp
+    max_emotion_score = -1000
+    max_emotion = ""
+    emotion_scores = {}    
+    for emotion in emotions.keys():
+        score = emotions[emotion]
+        emotion_scores[emotion] = score
+        if score > max_emotion_score:
+            max_emotion_score = score
+            max_emotion = emotion
+    emotion_scores["dominant_emotion"] = max_emotion
 
-    return reply_text
+    return emotion_scores
